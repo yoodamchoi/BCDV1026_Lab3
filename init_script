@@ -1,0 +1,11 @@
+#!/bin/bash
+
+wasmd init my-node --chain-id $CHAIN_ID
+wasmd keys add main
+wasmd keys add validator
+wasmd add-genesis-account $(wasmd keys show main -a) 10000000000stake
+wasmd add-genesis-account $(wasmd keys show validator -a) 10000000000stake
+wasmd gentx validator 1000000000stake --chain-id $CHAIN_ID
+wasmd collect-gentxs
+wasmd validate-genesis
+wasmd start
